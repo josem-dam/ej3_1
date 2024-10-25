@@ -1,4 +1,4 @@
-package edu.acceso.ej3_1;
+package edu.acceso.ej3_1.modelo;
 
 public class Lector {
 

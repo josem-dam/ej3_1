@@ -2,6 +2,8 @@ package edu.acceso.ej3_1;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.MalformedURLException;
+import java.net.URI;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.stream.IntStream;
@@ -21,12 +23,15 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
+import edu.acceso.ej3_1.modelo.Autor;
+import edu.acceso.ej3_1.modelo.Lector;
+
 public class Entrada {
 
     private static DocumentBuilder builder;
     private static XPath xpath = XPathFactory.newInstance().newXPath();
     private Document xml;
-    private Path archivo;
+    private String entrada;
     
     static {
         try {
@@ -37,21 +42,20 @@ public class Entrada {
         }
     }
     
-    public Entrada(Path archivo) throws IOException, SAXException {
-        setArchivo(archivo);
+    public Entrada(URI entrada) throws IOException, MalformedURLException, SAXException {
+        setEntrada(entrada);
+    }
 
-        try(InputStream st = Files.newInputStream(archivo)) {
+    public String getEntrada() {
+        return entrada;
+    }
+
+    private void setEntrada(URI entrada) throws IOException, MalformedURLException, SAXException {
+        this.entrada = entrada.toString();
+        try(InputStream st = entrada.toURL().openStream()) {
             xml = builder.parse(st);
             System.out.println("HOLA");
         }
-    }
-
-    public Path getArchivo() {
-        return archivo;
-    }
-
-    private void setArchivo(Path archivo) {
-        this.archivo = archivo;
     }
 
     public Autor[] leerAutores() {

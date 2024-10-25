@@ -1,0 +1,19 @@
+{
+    "version": "2.0.0",
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Ejercicio 2.3 (txt)",
+            "request": "launch",
+            "mainClass": "edu.acceso.ej3_1.Main",
+//            "args": ["-i", "https://alacena.iescastillodeluna.es/anaquel/biblioteca.xml"]
+        },
+        {
+            "type": "java",
+            "name": "Ejercicio 2.3 (xml)",
+            "request": "launch",
+            "mainClass": "edu.acceso.ej3_1.Main",
+            "args": ["-f", "xml"]
+        }
+    ]
+}
