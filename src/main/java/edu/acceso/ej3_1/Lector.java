@@ -28,4 +28,9 @@ public class Lector {
     public void setPrestamos(int prestamos) {
         this.prestamos = prestamos;
     }
+
+    @Override
+    public String toString() {
+        return String.format("%s: %d", nombre, prestamos);
+    }
 }

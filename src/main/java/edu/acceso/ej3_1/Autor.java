@@ -28,4 +28,9 @@ public class Autor {
     public void setLibros(int libros) {
         this.libros = libros;
     }
+
+    @Override
+    public String toString() {
+        return String.format("%s: %d", nombre, libros);
+    }
 }
