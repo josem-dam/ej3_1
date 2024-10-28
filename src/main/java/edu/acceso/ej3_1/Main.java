@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.nio.file.Path;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -16,8 +15,6 @@ import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
 import org.xml.sax.SAXException;
 
-import edu.acceso.ej3_1.modelo.Autor;
-import edu.acceso.ej3_1.modelo.Lector;
 import edu.acceso.ej3_1.output.Output;
 import edu.acceso.ej3_1.output.OutputFactory;
 
@@ -102,15 +99,15 @@ public class Main {
             System.err.println("El documento XML no está bien formado");
         }
 
-        Autor[] autores = entrada.leerAutores();
-        System.out.println(Arrays.toString(autores));
-        Lector[] lectores = entrada.leerLectores();
-        System.out.println(Arrays.toString(lectores));
-        System.out.println(entrada.nombreBiblioteca());
+        Map<String, Object> datos = Map.of(
+            "autores", entrada.leerAutores(),
+            "lectores", entrada.leerLectores(),
+            "nombre", entrada.nombreBiblioteca()
+        );
 
         Output salida = new OutputFactory(opciones).crearSalida();
         try {
-            salida.escribir(autores, lectores);
+            salida.escribir(datos);
         }
         catch(IOException err) {
             System.err.println("No puede escribirse la salida");
