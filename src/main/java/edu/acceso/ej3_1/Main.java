@@ -18,6 +18,8 @@ import org.xml.sax.SAXException;
 
 import edu.acceso.ej3_1.modelo.Autor;
 import edu.acceso.ej3_1.modelo.Lector;
+import edu.acceso.ej3_1.output.Output;
+import edu.acceso.ej3_1.output.OutputFactory;
 
 public class Main {
 
@@ -55,7 +57,7 @@ public class Main {
 
         try {
             CommandLine cmd = parser.parse(options, args);
-            opciones.put("output", cmd.getOptionValue("output", "")); 
+            opciones.put("output", cmd.getOptionValue("output", (String) null)); 
             opciones.put("format", cmd.getOptionValue("format", "txt"));
             opciones.put("input", cmd.getOptionValue("input", archivo));
 
@@ -105,5 +107,14 @@ public class Main {
         Lector[] lectores = entrada.leerLectores();
         System.out.println(Arrays.toString(lectores));
         System.out.println(entrada.nombreBiblioteca());
+
+        Output salida = new OutputFactory(opciones).crearSalida();
+        try {
+            salida.escribir(autores, lectores);
+        }
+        catch(IOException err) {
+            System.err.println("No puede escribirse la salida");
+            System.exit(1);
+        }
     }
 }

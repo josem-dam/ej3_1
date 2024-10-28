@@ -4,8 +4,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URI;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
@@ -54,7 +52,6 @@ public class Entrada {
         this.entrada = entrada.toString();
         try(InputStream st = entrada.toURL().openStream()) {
             xml = builder.parse(st);
-            System.out.println("HOLA");
         }
     }
 
