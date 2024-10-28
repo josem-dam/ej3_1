@@ -8,8 +8,17 @@ import java.util.Map;
 import edu.acceso.ej3_1.modelo.Autor;
 import edu.acceso.ej3_1.modelo.Lector;
 
+/**
+ * Modela la salida TXT.
+ */
 public class TxtOutput extends Output {
 
+    /**
+     * Genera la salida TXT.
+     * @param salida Flujo de salida.
+     * @param datos Datos a escribir.
+     * @throws IOException Si no puede escribirse la salida.
+     */
     @Override
     protected void escribirFormato(OutputStream salida, Map<String, Object> datos) throws IOException {
         try (OutputStreamWriter sw = new OutputStreamWriter(salida)) {

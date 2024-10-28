@@ -24,6 +24,9 @@ import org.xml.sax.SAXException;
 import edu.acceso.ej3_1.modelo.Autor;
 import edu.acceso.ej3_1.modelo.Lector;
 
+/**
+ * Modela la entrada XML de datos.
+ */
 public class Entrada {
 
     private static DocumentBuilder builder;
@@ -40,14 +43,32 @@ public class Entrada {
         }
     }
     
+    /**
+     * Constructor de la clase.
+     * @param entrada URL de los datos de entrada.
+     * @throws IOException Si no puede accederse a la entrada.
+     * @throws MalformedURLException Errores en la URL.
+     * @throws SAXException Problemas con el XML de la entrada.
+     */
     public Entrada(URI entrada) throws IOException, MalformedURLException, SAXException {
         setEntrada(entrada);
     }
 
+    /**
+     * Getter de entrada.
+     * @return La URL de la entrada.
+     */
     public String getEntrada() {
         return entrada;
     }
 
+    /**
+     * Setter de entrada.
+     * @param entrada URL de la entrada de datos.
+     * @throws IOException Si no puede accederse a la URL.
+     * @throws MalformedURLException Error en el formato de la URL.
+     * @throws SAXException Error en el procesamiento del XML.
+     */
     private void setEntrada(URI entrada) throws IOException, MalformedURLException, SAXException {
         this.entrada = entrada.toString();
         try(InputStream st = entrada.toURL().openStream()) {
@@ -55,6 +76,10 @@ public class Entrada {
         }
     }
 
+    /**
+     * Obtiene los autores de la biblioteca.
+     * @return La lista de autores.
+     */
     public Autor[] leerAutores() {
         Stream<String> nombres;
         // Nombres de los autores (sin repetición)
@@ -82,7 +107,11 @@ public class Entrada {
         }).toArray(Autor[]::new);
     }
 
-    public Lector[]  leerLectores() {
+    /**
+     * Obtiene los lectores de la biblioteca.
+     * @return La lista de lectores.
+     */
+    public Lector[] leerLectores() {
         NodeList lectores = xml.getElementsByTagName("lector");
         Stream<Node>  ls = IntStream.range(0, lectores.getLength()).mapToObj(lectores::item);
 
@@ -101,6 +130,10 @@ public class Entrada {
         }).toArray(Lector[]::new);
     }
 
+    /**
+     * Obtiene el nombre de la biblioteca.
+     * @return Nombre de la biblioteca.
+     */
     public String nombreBiblioteca() {
         return xml.getDocumentElement().getAttribute("nombre");
     }

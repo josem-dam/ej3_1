@@ -20,6 +20,11 @@ import edu.acceso.ej3_1.output.OutputFactory;
 
 public class Main {
 
+    /**
+     * Procesa los argumentos de la línea de órdenes.
+     * @param args Argumentos pasados al programa.
+     * @return Mapa de claves/valor con las opciones.
+     */
     private static Map<String, Object> leerArgumentos(String[] args) {
 
         String archivo = Path.of(System.getProperty("user.dir"), "src", "main", "resources", "biblioteca.xml").toString();
@@ -82,6 +87,10 @@ public class Main {
         return opciones;
     }
 
+    /**
+     * Programa principal
+     * @param args Argumentos de la línea de órdenes.
+     */
     public static void main(String[] args) {
         Map<String, Object> opciones = leerArgumentos(args);
 
