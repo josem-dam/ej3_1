@@ -29,11 +29,24 @@ import edu.acceso.ej3_1.modelo.Lector;
  */
 public class Entrada {
 
+    /**
+     * Constructor del DOM del XML.
+     */
     private static DocumentBuilder builder;
+    /**
+     * Fábrica para el uso de expresiones XPath.
+     */
     private static XPath xpath = XPathFactory.newInstance().newXPath();
+    /**
+     * Documento donde se almacena el DOM.
+     */
     private Document xml;
-    private String entrada;
+    /**
+     * Fuente de los datos de entrada.
+     */
+    private URI entrada;
     
+    // Cuando la definición de un atributo estático puede provocar excepciones, hay que meterlo dentro de este bloque.
     static {
         try {
             builder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
@@ -45,7 +58,8 @@ public class Entrada {
     
     /**
      * Constructor de la clase.
-     * @param entrada URL de los datos de entrada.
+     * @param entrada URL de los datos de entrada. Si es null, se sobreentiende
+     *    que es la entrada estándar.
      * @throws IOException Si no puede accederse a la entrada.
      * @throws MalformedURLException Errores en la URL.
      * @throws SAXException Problemas con el XML de la entrada.
@@ -58,7 +72,7 @@ public class Entrada {
      * Getter de entrada.
      * @return La URL de la entrada.
      */
-    public String getEntrada() {
+    public URI getEntrada() {
         return entrada;
     }
 
@@ -70,8 +84,8 @@ public class Entrada {
      * @throws SAXException Error en el procesamiento del XML.
      */
     private void setEntrada(URI entrada) throws IOException, MalformedURLException, SAXException {
-        this.entrada = entrada.toString();
-        try(InputStream st = entrada.toURL().openStream()) {
+        this.entrada = entrada;
+        try(InputStream st = (entrada == null)?System.in:entrada.toURL().openStream()) {
             xml = builder.parse(st);
         }
     }

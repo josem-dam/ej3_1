@@ -18,6 +18,9 @@ import org.xml.sax.SAXException;
 import edu.acceso.ej3_1.output.Output;
 import edu.acceso.ej3_1.output.OutputFactory;
 
+/**
+ * Clase para el programa principal.
+ */
 public class Main {
 
     /**
@@ -26,8 +29,6 @@ public class Main {
      * @return Mapa de claves/valor con las opciones.
      */
     private static Map<String, Object> leerArgumentos(String[] args) {
-
-        String archivo = Path.of(System.getProperty("user.dir"), "src", "main", "resources", "biblioteca.xml").toString();
 
         Options options = new Options();
         Option salida = Option.builder("o")
@@ -61,23 +62,24 @@ public class Main {
             CommandLine cmd = parser.parse(options, args);
             opciones.put("output", cmd.getOptionValue("output", (String) null)); 
             opciones.put("format", cmd.getOptionValue("format", "txt"));
-            opciones.put("input", cmd.getOptionValue("input", archivo));
+            opciones.put("input", cmd.getOptionValue("input", (String) null));
 
             String input = (String) opciones.get("input");
-            if (!input.startsWith("http://")
-                && !input.startsWith("https://")
-                && !input.startsWith("file://")) {
-                input = String.format("file://%s", Path.of(input).toAbsolutePath().toString());
-            }
+            if(input != null) {
+                if (!input.startsWith("http://")
+                    && !input.startsWith("https://")
+                    && !input.startsWith("file://")) {
+                    input = String.format("file://%s", Path.of(input).toAbsolutePath().toString());
+                }
 
-            try {
-                opciones.put("input", new URI(input));
+                try {
+                    opciones.put("input", new URI(input));
+                }
+                catch(URISyntaxException err) {
+                    System.err.println("La sintaxis de la entrada no es válida");
+                    System.exit(2);
+                }
             }
-            catch(URISyntaxException err) {
-                System.err.println("La sintaxis de la entrada no es válida");
-                System.exit(2);
-            }
-
         }
         catch(ParseException err) {
             err.printStackTrace();
