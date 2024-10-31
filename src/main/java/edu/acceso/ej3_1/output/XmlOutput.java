@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.util.Map;
+import java.util.stream.Stream;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -32,6 +33,7 @@ public class XmlOutput extends Output {
      * @param datos Datos a escribir.
      * @throws IOException Si no puede escribirse la salida.
      */
+    @SuppressWarnings("unchecked")
     @Override
     protected void escribirFormato(OutputStream salida, Map<String, Object> datos) throws IOException {
         try (OutputStreamWriter sw = new OutputStreamWriter(salida)) {
@@ -47,7 +49,8 @@ public class XmlOutput extends Output {
 
             Element autores = xml.createElement("autores");
             root.appendChild(autores);
-            for(Autor autor: (Autor[]) datos.get("autores")) {
+            Stream<Autor> sautores = (Stream<Autor>) datos.get("autores");
+            for(Autor autor: (Iterable<Autor>) sautores::iterator) {
                 Element a = xml.createElement("autor");
                 autores.appendChild(a);
                 a.setAttribute("nombre", autor.getNombre());
@@ -56,7 +59,8 @@ public class XmlOutput extends Output {
 
             Element lectores = xml.createElement("lectores");
             root.appendChild(lectores);
-            for(Lector lector: (Lector[]) datos.get("lectores")) {
+            Stream<Lector> slectores = (Stream<Lector>) datos.get("lectores");
+            for(Lector lector: (Iterable<Lector>) slectores::iterator) {
                 Element l = xml.createElement("lector");
                 lectores.appendChild(l);
                 l.setAttribute("nombre", lector.getNombre());

@@ -94,7 +94,7 @@ public class Entrada {
      * Obtiene los autores de la biblioteca.
      * @return La lista de autores.
      */
-    public Autor[] leerAutores() {
+    public Stream<Autor> leerAutores() {
         Stream<String> nombres;
         // Nombres de los autores (sin repetición)
         try {
@@ -118,14 +118,14 @@ public class Entrada {
                 assert false: "Expresión para nombre de los autores incorrecta";
                 return null;
             }
-        }).toArray(Autor[]::new);
+        });
     }
 
     /**
      * Obtiene los lectores de la biblioteca.
      * @return La lista de lectores.
      */
-    public Lector[] leerLectores() {
+    public Stream<Lector> leerLectores() {
         NodeList lectores = xml.getElementsByTagName("lector");
         Stream<Node>  ls = IntStream.range(0, lectores.getLength()).mapToObj(lectores::item);
 
@@ -141,7 +141,7 @@ public class Entrada {
                 assert false: "Expresión para nombre de los autores incorrecta";
                 return null;
             }
-        }).toArray(Lector[]::new);
+        });
     }
 
     /**
