@@ -66,14 +66,17 @@ public class Main {
 
             String input = (String) opciones.get("input");
             if(input != null) {
-                if (!input.startsWith("http://")
-                    && !input.startsWith("https://")
-                    && !input.startsWith("file://")) {
-                    input = String.format("file://%s", Path.of(input).toAbsolutePath().toString());
-                }
-
                 try {
-                    opciones.put("input", new URI(input));
+                    URI uri = null;
+                    if (!input.startsWith("http://")
+                        && !input.startsWith("https://")
+                        && !input.startsWith("file://")) {
+                        uri = Path.of(input).toUri();
+                    }
+                    else {
+                        uri = new URI(input);
+                    }
+                    opciones.put("input", uri);
                 }
                 catch(URISyntaxException err) {
                     System.err.println("La sintaxis de la entrada no es válida");
